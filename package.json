@@ -114,7 +114,10 @@
   "@types/uuid": "^8.3.4",
   
     
-  "@typescript-eslint/eslint-plugin": "^8.35.0",
+  "@typescript-eslint/eslint-plugin": "^5.59.0",
+  
+    
+  "@typescript-eslint/parser": "^5.59.0",
   
     
   "autoprefixer": "^10.4.0",
