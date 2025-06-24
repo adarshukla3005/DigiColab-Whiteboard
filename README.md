@@ -38,6 +38,7 @@ Whether you're planning a project, teaching a class, or brainstorming new ideas,
 - **Download**: Export the whiteboard as a PNG image
 - **Undo/Redo**: Revert or restore recent changes
 - **Responsive Design**: Works on desktop and tablet devices
+- **Persistent Storage**: Room data is stored in MongoDB for persistence
 
 ## 🛠️ Tech Stack
 
@@ -54,6 +55,8 @@ Whether you're planning a project, teaching a class, or brainstorming new ideas,
 - **Node.js**: JavaScript runtime
 - **Socket.IO**: Real-time bidirectional event-based communication
 - **Express**: Web application framework
+- **MongoDB**: NoSQL database for persistent storage
+- **Mongoose**: MongoDB object modeling for Node.js
 
 ### Development Tools
 - **ESLint**: Code linting
@@ -65,6 +68,7 @@ Whether you're planning a project, teaching a class, or brainstorming new ideas,
 ### Prerequisites
 - Node.js (v14 or later)
 - npm (v6 or later)
+- MongoDB (local or Atlas connection)
 
 ### Installation
 
@@ -79,13 +83,21 @@ Whether you're planning a project, teaching a class, or brainstorming new ideas,
    npm install
    ```
 
-3. **Run the development server:**
+3. **Set up environment variables:**
+   Create a `.env` file in the root directory with the following variables:
+   ```
+   MONGODB_URI=your_mongodb_connection_string/digicolab
+   PORT=3000
+   NODE_ENV=development
+   ```
+
+4. **Run the development server:**
    ```bash
    npm run dev
    ```
    This will start both the frontend and backend servers concurrently.
 
-4. **Access the application:**
+5. **Access the application:**
    Open your browser and navigate to `http://localhost:3000`
 
 ### Building for Production
@@ -102,10 +114,101 @@ Whether you're planning a project, teaching a class, or brainstorming new ideas,
 
 ## 🌐 Deployment
 
-DigiColab can be deployed to various platforms such as Vercel, Netlify, or a traditional server setup.
+DigiColab can be deployed to various platforms such as Vercel, Railway, or a traditional server setup.
+
+### MongoDB Setup
+
+1. **Local Development:**
+   - Install MongoDB locally or use Docker
+   - Connect using the URI: `mongodb://localhost:27017/digicolab`
+
+2. **Production:**
+   - Create a MongoDB Atlas account (https://www.mongodb.com/cloud/atlas)
+   - Create a new cluster
+   - Configure network access and database users
+   - Get your connection string: `mongodb+srv://<username>:<password>@<cluster>.mongodb.net/digicolab`
+   - Add this connection string to your environment variables
+
+### Deployment Options
+
+#### Vercel Deployment
+
+1. Install Vercel CLI:
+   ```bash
+   npm install -g vercel
+   ```
+
+2. Login to Vercel:
+   ```bash
+   vercel login
+   ```
+
+3. Deploy your application:
+   ```bash
+   vercel
+   ```
+
+4. Configure environment variables in the Vercel dashboard:
+   - MONGODB_URI
+   - NODE_ENV=production
+
+#### Railway Deployment
+
+1. Create a Railway account
+2. Connect your GitHub repository
+3. Add MongoDB as a plugin or use external MongoDB Atlas
+4. Configure environment variables:
+   - MONGODB_URI
+   - NODE_ENV=production
+
+#### Heroku Deployment
+
+1. Create a Heroku account
+2. Install Heroku CLI and login
+3. Create a new Heroku app
+4. Add MongoDB Atlas as an add-on or use external connection
+5. Configure environment variables in Heroku dashboard
 
 ### Deployed Demo
 
 You can try out DigiColab at: [https://digicolab.vercel.app](https://digicolab.vercel.app)
+
+## Database Scripts
+
+The application includes utility scripts for database operations:
+
+- `npm run db:validate` - Validate MongoDB models and connection
+- `npm run db:check` - Check database contents
+- `npm run db:backup` - Backup database data
+- `npm run db:seed` - Seed the database with initial data
+
+## Data Models
+
+### Room Model
+- `roomId` - Unique identifier for the room
+- `drawed` - Array of drawing objects
+- `isActive` - Whether the room is active
+- `maxUsers` - Maximum number of users allowed in the room
+- `createdAt` - When the room was created
+- `updatedAt` - When the room was last updated
+
+### User Model
+- `socketId` - Unique identifier for the user
+- `username` - User's display name
+- `roomId` - Room the user belongs to
+- `moves` - Array of user's drawing moves
+- `joinedAt` - When the user joined
+- `lastActive` - When the user was last active
+
+### Session Model
+- `roomId` - Room the session belongs to
+- `participants` - Array of user socket IDs
+- `messages` - Array of chat messages
+- `isActive` - Whether the session is active
+- `startTime` - When the session started
+
+## License
+
+This project is licensed under the MIT License.
 
 

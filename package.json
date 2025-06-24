@@ -25,17 +25,38 @@
   "start": "cross-env NODE_ENV=production node build/index.js",
   
     
-  "lint": "next lint"
+  "lint": "next lint",
+  
+    
+  "db:backup": "node server/scripts/backup.js",
+  
+    
+  "db:seed": "ts-node server/scripts/seed.ts",
+  
+    
+  "db:check": "node server/scripts/check-data.js",
+  
+    
+  "db:validate": "node server/scripts/validate-models.js"
   
   },
   
   "dependencies": {
   
     
+  "dotenv": "^16.4.5",
+  
+    
   "express": "^4.17.3",
   
     
   "framer-motion": "^6.3.3",
+  
+    
+  "mongodb": "^6.5.0",
+  
+    
+  "mongoose": "^8.3.2",
   
     
   "next": "latest",
@@ -91,6 +112,9 @@
   
     
   "@types/uuid": "^8.3.4",
+  
+    
+  "@typescript-eslint/eslint-plugin": "^8.35.0",
   
     
   "autoprefixer": "^10.4.0",
