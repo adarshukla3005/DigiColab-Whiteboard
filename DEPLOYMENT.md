@@ -6,7 +6,7 @@ This guide explains how to deploy the DigiColab collaborative whiteboard applica
 
 The application consists of two main components:
 1. **Frontend**: A Next.js application deployed on Vercel
-2. **Backend**: A Node.js/Express/Socket.IO server deployed on Render
+2. **Backend**: A Node.js/Express/Socket.IO server deployed on Railway
 
 ## Frontend Deployment (Vercel)
 
@@ -14,34 +14,38 @@ The application consists of two main components:
 2. Create an account on [Vercel](https://vercel.com) if you don't have one
 3. Create a new project and connect it to your GitHub repository
 4. Configure the following environment variables:
-   - `NEXT_PUBLIC_BACKEND_URL`: URL of your backend (e.g., https://digicolab-backend.onrender.com)
+   - `NEXT_PUBLIC_BACKEND_URL`: URL of your backend (from Railway deployment)
 5. Deploy the project
 
-## Backend Deployment (Render)
+## Backend Deployment (Railway)
 
-1. Create an account on [Render](https://render.com) if you don't have one
-2. Create a new Web Service and connect it to your GitHub repository
-3. Configure the service with these settings:
-   - **Name**: digicolab-backend (or any name you prefer)
-   - **Environment**: Node
-   - **Build Command**: `cd server && npm install && npm run build`
-   - **Start Command**: `cd server && node dist/standalone.js`
-   - **Auto-Deploy**: Enable (optional)
+1. Create an account on [Railway](https://railway.app) if you don't have one
+2. From your dashboard, click "New Project" and select "Deploy from GitHub repo"
+3. Connect your GitHub account and select your repository
+4. Configure the service:
+   - **Root Directory**: `server`
+   - **Environment Variables**:
+     - `PORT`: 8000 (Railway will override this with its own port)
+     - `MONGODB_URI`: Your MongoDB connection string
+     - `FRONTEND_URL`: Your Vercel frontend URL (e.g., https://your-app.vercel.app)
+     - `NODE_ENV`: production
+5. Click "Deploy"
+6. Once deployed, Railway will provide a URL for your backend service
+7. Use this URL as the `NEXT_PUBLIC_BACKEND_URL` in your Vercel project
 
-4. Add the following environment variables:
-   - `PORT`: 8000 (Render will override this with its own port)
-   - `MONGODB_URI`: Your MongoDB connection string
-   - `FRONTEND_URL`: Your Vercel frontend URL (e.g., https://your-app.vercel.app)
-   - `NODE_ENV`: production
+## Connecting Frontend to Backend
 
-5. Click "Create Web Service"
+1. Go to your Vercel project settings
+2. Under "Environment Variables", add or update:
+   - `NEXT_PUBLIC_BACKEND_URL`: Your Railway backend URL
+3. Redeploy your Vercel project to apply the changes
 
 ## MongoDB Setup
 
 1. Create a MongoDB Atlas account if you don't have one
 2. Create a new cluster
 3. Create a database user with read/write permissions
-4. Get your connection string and add it to your backend environment variables
+4. Get your connection string and add it to your Railway environment variables
 
 ## Testing Your Deployment
 
@@ -57,13 +61,20 @@ The application consists of two main components:
 - Ensure CORS is properly configured on the backend
 
 ### Backend Issues
-- Check Render logs for errors
+- Check Railway logs for errors
 - Verify MongoDB connection string is correct
-- Check that the server is running by accessing the health endpoint: `https://your-backend.onrender.com/health`
+- Check that the server is running by accessing the health endpoint: `https://your-backend-url/health`
 
 ### Connection Issues
 - Ensure WebSocket connections are allowed by your firewall/proxy
 - Check that the Socket.IO connection is established in the browser console
+
+## Railway-Specific Tips
+
+1. **Automatic Deployments**: Railway automatically deploys when you push to your GitHub repository
+2. **Monitoring**: Railway provides logs and metrics for your application
+3. **Scaling**: You can easily scale your application in the Railway dashboard
+4. **Custom Domains**: You can add a custom domain to your Railway project in the settings
 
 ## Scaling Considerations
 
@@ -71,7 +82,7 @@ The application consists of two main components:
 - Monitor database performance and upgrade your plan as needed
 - Set up database backups for data safety
 
-### Render
+### Railway
 - Consider upgrading to a paid plan for better performance and reliability
 - Set up health checks and monitoring
 
@@ -88,6 +99,6 @@ The application consists of two main components:
 ## Additional Resources
 
 - [Vercel Documentation](https://vercel.com/docs)
-- [Render Documentation](https://render.com/docs)
+- [Railway Documentation](https://railway.app/docs)
 - [MongoDB Atlas Documentation](https://docs.atlas.mongodb.com/)
 - [Socket.IO Deployment Guide](https://socket.io/docs/v4/deployment/) 

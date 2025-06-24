@@ -9,33 +9,30 @@ This is the backend server for the DigiColab collaborative whiteboard applicatio
 - Chat functionality
 - MongoDB integration for data persistence
 
-## Deployment on Render
+## Deployment on Railway
 
 ### Prerequisites
 
 1. Create a MongoDB Atlas database
-2. Create a Render account
+2. Create a [Railway](https://railway.app) account
 
-### Steps to Deploy on Render
+### Steps to Deploy on Railway
 
 1. Fork or clone this repository
-2. Log in to [Render](https://render.com)
-3. Click "New" and select "Web Service"
+2. Log in to [Railway](https://railway.app)
+3. Click "New Project" and select "Deploy from GitHub repo"
 4. Connect your GitHub account and select this repository
 5. Configure the service with these settings:
-   - **Name**: digicolab-backend (or any name you prefer)
-   - **Environment**: Node
-   - **Build Command**: `cd server && npm install && npm run build`
-   - **Start Command**: `cd server && node dist/standalone.js`
-   - **Auto-Deploy**: Enable (optional)
+   - **Root Directory**: `server`
+   - **Environment Variables**:
+     - `PORT`: 8000 (Railway will override this with its own port)
+     - `MONGODB_URI`: Your MongoDB connection string
+     - `FRONTEND_URL`: Your Vercel frontend URL (e.g., https://your-app.vercel.app)
+     - `NODE_ENV`: production
 
-6. Add the following environment variables:
-   - `PORT`: 8000 (Render will override this with its own port)
-   - `MONGODB_URI`: Your MongoDB connection string
-   - `FRONTEND_URL`: Your Vercel frontend URL (e.g., https://your-app.vercel.app)
-   - `NODE_ENV`: production
-
-7. Click "Create Web Service"
+6. Click "Deploy"
+7. Once deployed, go to the "Settings" tab and find your project's URL
+8. Use this URL as the `NEXT_PUBLIC_BACKEND_URL` in your Vercel frontend
 
 ## Local Development
 
