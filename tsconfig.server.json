@@ -3,9 +3,10 @@
   "compilerOptions": {
     "module": "commonjs",
     "outDir": "build",
-    "target": "es2017",
+    "target": "es2019",
     "isolatedModules": false,
-    "noEmit": false
+    "noEmit": false,
+    "skipLibCheck": true
   },
   "include": ["server"]
 }
