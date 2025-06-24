@@ -1,11 +1,10 @@
 import { FormEvent, useEffect, useState } from "react";
 
 import { useRouter } from "next/router";
-import { FiEdit3, FiUsers, FiPlus } from "react-icons/fi";
-
 import { socket } from "@/common/lib/socket";
 import { useModal } from "@/common/recoil/modal";
 import { useSetRoomId } from "@/common/recoil/room";
+import { EditIcon, UsersIcon, PlusIcon } from "./icons";
 
 import NotFoundModal from "../modals/NotFound";
 
@@ -68,7 +67,7 @@ const Home = () => {
         <div className="mx-auto flex max-w-7xl items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-600 text-white">
-              <FiEdit3 className="h-5 w-5" />
+              <EditIcon />
             </div>
             <h1 className="text-2xl font-bold text-secondary-800">DigiColab</h1><h3><b>by Adarsh Shukla</b></h3>
           </div>
@@ -115,7 +114,7 @@ const Home = () => {
                       type="submit"
                       disabled={!roomId.trim() || !username.trim()}
                     >
-                      <FiUsers className="h-4 w-4" />
+                      <UsersIcon />
                       <span>Join</span>
                     </button>
                   </div>
@@ -134,7 +133,7 @@ const Home = () => {
                   className="btn w-full bg-accent-500 hover:bg-accent-600 flex items-center justify-center gap-2"
                   onClick={() => setIsCreating(true)}
                 >
-                  <FiPlus className="h-4 w-4" />
+                  <PlusIcon />
                   <span>Create New Room</span>
                 </button>
               </>
@@ -165,7 +164,7 @@ const Home = () => {
                     onClick={handleCreateRoom}
                     disabled={!username.trim()}
                   >
-                    <FiPlus className="h-4 w-4" />
+                    <PlusIcon />
                     <span>Create Room</span>
                   </button>
                 </div>
