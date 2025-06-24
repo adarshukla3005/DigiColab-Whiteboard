@@ -4,8 +4,8 @@
   "description": "Backend server for DigiBoard collaborative whiteboard",
   "main": "index.js",
   "scripts": {
-    "build": "tsc --project tsconfig.server.json",
-    "start": "node build/index.js",
+    "build": "tsc",
+    "start": "node dist/index.js",
     "dev": "ts-node index.ts"
   },
   "dependencies": {
@@ -14,7 +14,8 @@
     "mongodb": "^6.5.0",
     "mongoose": "^8.3.2",
     "socket.io": "^4.5.0",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "cors": "^2.8.5"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",

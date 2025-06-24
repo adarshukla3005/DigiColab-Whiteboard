@@ -1,90 +1,69 @@
 # DigiColab Deployment Guide
 
-This guide provides step-by-step instructions for deploying the DigiColab application with the frontend on Vercel and the backend on Render.
+This guide explains how to deploy the DigiColab collaborative whiteboard application.
 
-## Prerequisites
+## Architecture
 
-1. GitHub account with your DigiColab repository
-2. MongoDB Atlas account
-3. Vercel account
-4. Render account
+The application consists of two main components:
+1. **Frontend**: A Next.js application deployed on Vercel
+2. **Backend**: A Node.js/Express/Socket.IO server deployed on Render
 
-## Step 1: Prepare MongoDB Atlas
+## Frontend Deployment (Vercel)
 
-1. Create a MongoDB Atlas account at https://www.mongodb.com/cloud/atlas
-2. Create a new cluster (the free tier is sufficient for starting)
-3. Set up a database user with read and write privileges
-4. Configure network access to allow connections from anywhere (or specific IPs)
-5. Get your MongoDB connection string:
-   ```
-   mongodb+srv://<username>:<password>@<cluster>.mongodb.net/digiboard
-   ```
+1. Fork or clone the repository
+2. Create an account on [Vercel](https://vercel.com) if you don't have one
+3. Create a new project and connect it to your GitHub repository
+4. Configure the following environment variables:
+   - `NEXT_PUBLIC_BACKEND_URL`: URL of your backend (e.g., https://digicolab-backend.onrender.com)
+5. Deploy the project
 
-## Step 2: Deploy the Backend on Render
+## Backend Deployment (Render)
 
-1. Sign up for a Render account at https://render.com
-2. From your dashboard, click "New" and select "Web Service"
-3. Connect your GitHub repository
-4. Configure the web service:
-   - **Name**: `digicolab-backend` (or your preferred name)
-   - **Root Directory**: `server`
-   - **Runtime**: `Node`
-   - **Build Command**: `npm install && npm run build`
-   - **Start Command**: `npm start`
-5. Add the following environment variables:
-   - `MONGODB_URI`: Your MongoDB Atlas connection string
-   - `NODE_ENV`: `production`
-   - `PORT`: `10000` (Render will automatically set the PORT environment variable)
-6. Click "Create Web Service"
-7. Wait for the deployment to complete (this may take a few minutes)
-8. Note the URL of your backend service (e.g., `https://digicolab-backend.onrender.com`)
+1. Create an account on [Render](https://render.com) if you don't have one
+2. Create a new Web Service and connect it to your GitHub repository
+3. Configure the service with these settings:
+   - **Name**: digicolab-backend (or any name you prefer)
+   - **Environment**: Node
+   - **Build Command**: `cd server && npm install && npm run build`
+   - **Start Command**: `cd server && node dist/standalone.js`
+   - **Auto-Deploy**: Enable (optional)
 
-## Step 3: Deploy the Frontend on Vercel
+4. Add the following environment variables:
+   - `PORT`: 8000 (Render will override this with its own port)
+   - `MONGODB_URI`: Your MongoDB connection string
+   - `FRONTEND_URL`: Your Vercel frontend URL (e.g., https://your-app.vercel.app)
+   - `NODE_ENV`: production
 
-1. Sign up for a Vercel account at https://vercel.com
-2. From your dashboard, click "Add New" and select "Project"
-3. Import your GitHub repository
-4. Configure the project:
-   - **Framework Preset**: Select "Next.js"
-   - **Root Directory**: `./` (project root)
-   - **Build Command**: `npm run build:next`
-   - **Output Directory**: `.next`
-5. Add the following environment variable:
-   - `NEXT_PUBLIC_BACKEND_URL`: Your Render backend URL (from Step 2)
-6. Click "Deploy"
-7. Wait for the deployment to complete
-8. Your frontend is now live at the provided Vercel URL
+5. Click "Create Web Service"
 
-## Step 4: Update CORS Configuration (if needed)
+## MongoDB Setup
 
-If you encounter CORS issues, ensure that your backend server's CORS configuration includes your Vercel frontend URL:
+1. Create a MongoDB Atlas account if you don't have one
+2. Create a new cluster
+3. Create a database user with read/write permissions
+4. Get your connection string and add it to your backend environment variables
 
-1. In your Render dashboard, go to your backend service
-2. Update the `FRONTEND_URL` environment variable to match your Vercel frontend URL
+## Testing Your Deployment
 
-## Step 5: Testing the Deployment
-
-1. Visit your Vercel frontend URL
-2. Create a new whiteboard room
-3. Share the room link with others
-4. Verify that real-time collaboration works properly
+1. Open your Vercel frontend URL
+2. Create a new room
+3. Verify that real-time collaboration works by opening the room in multiple browser windows
 
 ## Troubleshooting
 
-### Socket Connection Issues
+### Frontend Issues
 - Check browser console for errors
-- Verify that `NEXT_PUBLIC_BACKEND_URL` is correctly set in Vercel
+- Verify that the `NEXT_PUBLIC_BACKEND_URL` is correctly set
 - Ensure CORS is properly configured on the backend
 
-### MongoDB Connection Errors
-- Verify your MongoDB Atlas connection string
-- Check if your IP is allowed in MongoDB Atlas Network Access
-- Review the backend logs in Render
+### Backend Issues
+- Check Render logs for errors
+- Verify MongoDB connection string is correct
+- Check that the server is running by accessing the health endpoint: `https://your-backend.onrender.com/health`
 
-### Deployment Failures
-- Check the build logs in Vercel or Render for specific errors
-- Ensure all dependencies are correctly listed in package.json
-- Verify that build scripts are correctly defined
+### Connection Issues
+- Ensure WebSocket connections are allowed by your firewall/proxy
+- Check that the Socket.IO connection is established in the browser console
 
 ## Scaling Considerations
 

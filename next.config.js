@@ -1,8 +1,9 @@
 /** @type {import('next').NextConfig} */
-module.exports = {
-  reactStrictMode: true,
+
+const nextConfig = {
+  reactStrictMode: false,
   env: {
-    NEXT_PUBLIC_BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL,
+    NEXT_PUBLIC_BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL || "https://digicolab-backend.onrender.com",
   },
   async headers() {
     return [
@@ -19,3 +20,5 @@ module.exports = {
     ];
   },
 };
+
+module.exports = nextConfig;
