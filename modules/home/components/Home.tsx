@@ -176,7 +176,7 @@ const Home = () => {
       </main>
 
       <footer className="py-4 text-center text-sm text-secondary-500">
-        © {new Date().getFullYear()} DigiColab. All rights reserved.
+        © DigiColab
       </footer>
     </div>
   );
