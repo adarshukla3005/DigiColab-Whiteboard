@@ -114,7 +114,7 @@ Whether you're planning a project, teaching a class, or brainstorming new ideas,
 
 ## 🌐 Deployment
 
-DigiColab can be deployed to various platforms such as Vercel, Railway, or a traditional server setup.
+DigiColab can be deployed with the frontend on Vercel and the backend on Render.
 
 ### MongoDB Setup
 
@@ -127,51 +127,77 @@ DigiColab can be deployed to various platforms such as Vercel, Railway, or a tra
    - Create a new cluster
    - Configure network access and database users
    - Get your connection string: `mongodb+srv://<username>:<password>@<cluster>.mongodb.net/digicolab`
-   - Add this connection string to your environment variables
+   - Add this connection string to your environment variables in Render
 
-### Deployment Options
+### Deployment Steps
 
-#### Vercel Deployment
+#### Backend Deployment on Render
 
-1. Install Vercel CLI:
+1. **Create a Render account** at https://render.com
+
+2. **Create a new Web Service**:
+   - Connect your GitHub repository
+   - Select the repository containing your DigiColab project
+   - Configure the service:
+     - Name: `digicolab-backend`
+     - Root Directory: `server`
+     - Runtime: `Node`
+     - Build Command: `npm install && npm run build`
+     - Start Command: `npm start`
+
+3. **Add environment variables**:
+   - `MONGODB_URI`: Your MongoDB Atlas connection string
+   - `NODE_ENV`: `production`
+   - `PORT`: `10000` (Render will automatically set the PORT environment variable)
+   - `FRONTEND_URL`: Your Vercel frontend URL (e.g., `https://digicolab.vercel.app`)
+
+4. **Deploy the service**:
+   - Click "Create Web Service"
+   - Wait for the deployment to complete
+
+5. **Note your backend URL** (e.g., `https://digicolab-backend.onrender.com`)
+
+#### Frontend Deployment on Vercel
+
+1. **Create a Vercel account** at https://vercel.com
+
+2. **Install Vercel CLI** (optional):
    ```bash
    npm install -g vercel
    ```
 
-2. Login to Vercel:
-   ```bash
-   vercel login
-   ```
+3. **Deploy from the Vercel dashboard**:
+   - Connect your GitHub repository
+   - Import your DigiColab project
+   - Configure the project:
+     - Framework Preset: `Next.js`
+     - Root Directory: `./` (project root)
+     - Build Command: `npm run build:next`
+     - Output Directory: `.next`
 
-3. Deploy your application:
-   ```bash
-   vercel
-   ```
+4. **Add environment variables**:
+   - `NEXT_PUBLIC_BACKEND_URL`: Your Render backend URL (e.g., `https://digicolab-backend.onrender.com`)
 
-4. Configure environment variables in the Vercel dashboard:
-   - MONGODB_URI
-   - NODE_ENV=production
+5. **Deploy the project**:
+   - Click "Deploy"
+   - Wait for the deployment to complete
 
-#### Railway Deployment
+6. **Configure your custom domain** (optional):
+   - Go to the project settings
+   - Add your domain and configure DNS settings
 
-1. Create a Railway account
-2. Connect your GitHub repository
-3. Add MongoDB as a plugin or use external MongoDB Atlas
-4. Configure environment variables:
-   - MONGODB_URI
-   - NODE_ENV=production
+### Testing Your Deployment
 
-#### Heroku Deployment
+1. Visit your Vercel frontend URL
+2. Create a new whiteboard room
+3. Share the room link with others
+4. Verify that real-time collaboration works properly
 
-1. Create a Heroku account
-2. Install Heroku CLI and login
-3. Create a new Heroku app
-4. Add MongoDB Atlas as an add-on or use external connection
-5. Configure environment variables in Heroku dashboard
+### Troubleshooting
 
-### Deployed Demo
-
-You can try out DigiColab at: [https://digicolab.vercel.app](https://digicolab.vercel.app)
+- **Socket Connection Issues**: Make sure CORS is properly configured and the backend URL is correct
+- **MongoDB Connection Errors**: Verify your MongoDB Atlas connection string and network access settings
+- **Deployment Failures**: Check the build logs in Vercel or Render for specific errors
 
 ## Database Scripts
 

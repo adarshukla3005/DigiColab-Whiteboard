@@ -70,7 +70,7 @@ const Home = () => {
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-600 text-white">
               <FiEdit3 className="h-5 w-5" />
             </div>
-            <h1 className="text-2xl font-bold text-secondary-800">DigiColab</h1>
+            <h1 className="text-2xl font-bold text-secondary-800">DigiColab</h1><h3><b>by Adarsh Shukla</b></h3>
           </div>
         </div>
       </header>

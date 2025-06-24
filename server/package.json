@@ -1,0 +1,29 @@
+{
+  "name": "digiboard-backend",
+  "version": "1.0.0",
+  "description": "Backend server for DigiBoard collaborative whiteboard",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc --project tsconfig.server.json",
+    "start": "node build/index.js",
+    "dev": "ts-node index.ts"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.17.3",
+    "mongodb": "^6.5.0",
+    "mongoose": "^8.3.2",
+    "socket.io": "^4.5.0",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/node": "17.0.4",
+    "@types/uuid": "^8.3.4",
+    "ts-node": "^10.9.2",
+    "typescript": "4.5.4"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+} 

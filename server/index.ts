@@ -3,13 +3,17 @@ import { createServer } from "http";
 import {} from "@/common/types/global";
 
 import express from "express";
-import next, { NextApiHandler } from "next";
+import next from "next";
 import { Server } from "socket.io";
 import { v4 } from "uuid";
 import connectDB from "./db/connect";
 import Room from "./models/Room";
 import User from "./models/User";
 import Session from "./models/Session";
+import dotenv from "dotenv";
+
+// Load environment variables
+dotenv.config();
 
 // Enable mongoose debugging in development mode
 if (process.env.NODE_ENV !== "production") {
@@ -20,10 +24,14 @@ if (process.env.NODE_ENV !== "production") {
 
 const port = parseInt(process.env.PORT || "3000", 10);
 const dev = process.env.NODE_ENV !== "production";
-const nextApp = next({ dev });
-const nextHandler: NextApiHandler = nextApp.getRequestHandler();
 
-nextApp.prepare().then(async () => {
+// Only use Next.js in development mode or when running as a monorepo
+const isMonorepo = process.env.IS_MONOREPO === "true";
+const nextApp = isMonorepo || dev ? next({ dev }) : null;
+const nextHandler = nextApp ? nextApp.getRequestHandler() : null;
+
+// Function to start the server
+const startServer = async () => {
   // Connect to MongoDB
   try {
     await connectDB();
@@ -35,8 +43,16 @@ nextApp.prepare().then(async () => {
   const app = express();
   const server = createServer(app);
 
-  const io = new Server<ClientToServerEvents, ServerToClientEvents>(server);
+  // Configure CORS for Socket.IO
+  const io = new Server<ClientToServerEvents, ServerToClientEvents>(server, {
+    cors: {
+      origin: process.env.FRONTEND_URL || "*",
+      methods: ["GET", "POST"],
+      credentials: true
+    }
+  });
 
+  // Health check endpoint
   app.get("/health", async (_, res) => {
     res.send("Healthy");
   });
@@ -361,10 +377,21 @@ nextApp.prepare().then(async () => {
     });
   });
 
-  app.all("*", (req: any, res: any) => nextHandler(req, res));
+  // Only use Next.js in development mode or when running as a monorepo
+  if (nextApp && nextHandler) {
+    await nextApp.prepare();
+    app.all("*", (req: any, res: any) => {
+      return nextHandler(req, res);
+    });
+  }
 
   server.listen(port, () => {
-    // eslint-disable-next-line no-console
-    console.log(`> Ready on http://localhost:${port}`);
+    console.log(`> Server listening at http://localhost:${port}`);
   });
+};
+
+// Start the server
+startServer().catch(err => {
+  console.error("Failed to start server:", err);
+  process.exit(1);
 });
