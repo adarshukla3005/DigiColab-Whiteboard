@@ -5,8 +5,8 @@
   "devFiles": [],
   "ampDevFiles": [],
   "lowPriorityFiles": [
-    "static/iCXVRkuaQ20WPvM_vEbtQ/_buildManifest.js",
-    "static/iCXVRkuaQ20WPvM_vEbtQ/_ssgManifest.js"
+    "static/fYEnU_0yh1BMcis_Pz4Ce/_buildManifest.js",
+    "static/fYEnU_0yh1BMcis_Pz4Ce/_ssgManifest.js"
   ],
   "rootMainFiles": [],
   "pages": {
@@ -16,7 +16,7 @@
       "static/chunks/main-c6c319de9f7d0316.js",
       "static/chunks/d7eeaac4-6374765da228c6d0.js",
       "static/chunks/123-70484ae4a007cf51.js",
-      "static/chunks/pages/index-9ec9425a8146a6e2.js"
+      "static/chunks/pages/index-1cdcbfd609f4313e.js"
     ],
     "/[roomId]": [
       "static/chunks/webpack-d38be8d96a62f950.js",

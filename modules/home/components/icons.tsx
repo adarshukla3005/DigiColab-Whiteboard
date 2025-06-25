@@ -1,11 +1,6 @@
 import React from 'react';
-import { FiEdit3, FiUsers, FiPlus } from "react-icons/fi";
-import { IconType } from "react-icons";
+import * as FiIcons from "react-icons/fi";
 
-const IconWrapper = ({ Icon }: { Icon: IconType }): JSX.Element => {
-  return <Icon />;
-};
-
-export const EditIcon = (): JSX.Element => <IconWrapper Icon={FiEdit3} />;
-export const UsersIcon = (): JSX.Element => <IconWrapper Icon={FiUsers} />;
-export const PlusIcon = (): JSX.Element => <IconWrapper Icon={FiPlus} />; 
+export const EditIcon = () => React.createElement(FiIcons.FiEdit3);
+export const UsersIcon = () => React.createElement(FiIcons.FiUsers);
+export const PlusIcon = () => React.createElement(FiIcons.FiPlus); 
