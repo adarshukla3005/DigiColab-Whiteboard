@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { AiOutlineClose } from "react-icons/ai";
+import { IconWrapper } from "@/common/components/IconWrapper";
 
 import { useModal } from "@/common/recoil/modal";
 import { useRoom } from "@/common/recoil/room";
@@ -18,7 +19,7 @@ const ShareModal = () => {
   return (
     <div className="relative flex flex-col items-center rounded-md bg-white p-10 pt-5">
       <button onClick={closeModal} className="absolute top-5 right-5">
-        <AiOutlineClose />
+        <IconWrapper Icon={AiOutlineClose} />
       </button>
       <h2 className="text-2xl font-bold">Invite</h2>
       <h3>

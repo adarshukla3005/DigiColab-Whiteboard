@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { BsChatSquareFill } from "react-icons/bs";
 import { FaChevronDown } from "react-icons/fa";
 import { useList } from "react-use";
+import { IconWrapper } from "@/common/components/IconWrapper";
 
 import { DEFAULT_EASE } from "@/common/constants/easings";
 import { socket } from "@/common/lib/socket";
@@ -59,7 +60,7 @@ const Chat = () => {
         }}
       >
         <div className="flex items-center gap-2">
-          <BsChatSquareFill className="text-primary-200" />
+          <IconWrapper Icon={BsChatSquareFill} className="text-primary-200" />
           <span className="text-sm">Team Chat</span>
           {newMsg && (
             <span className="flex h-5 w-5 items-center justify-center rounded-full bg-accent-400 text-xs font-semibold text-white">
@@ -73,7 +74,7 @@ const Chat = () => {
           transition={{ ease: DEFAULT_EASE, duration: 0.2 }}
           className="text-primary-200"
         >
-          <FaChevronDown />
+          <IconWrapper Icon={FaChevronDown} />
         </motion.div>
       </button>
       <div className="flex flex-1 flex-col justify-between bg-white p-4">

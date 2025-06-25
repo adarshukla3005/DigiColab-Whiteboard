@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 
 import { BsFillImageFill } from "react-icons/bs";
+import { IconWrapper } from "@/common/components/IconWrapper";
 
 import { optimizeImage } from "@/common/lib/optimizeImage";
 
@@ -47,7 +48,7 @@ const ImagePicker = () => {
 
   return (
     <button className="btn-icon text-xl" onClick={handleImageInput}>
-      <BsFillImageFill />
+      <IconWrapper Icon={BsFillImageFill} />
     </button>
   );
 };

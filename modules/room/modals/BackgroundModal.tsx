@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 
 import { AiOutlineClose } from "react-icons/ai";
+import { IconWrapper } from "@/common/components/IconWrapper";
 
 import { useBackground, useSetBackground } from "@/common/recoil/background";
 import { useModal } from "@/common/recoil/modal";
@@ -45,7 +46,7 @@ const BackgroundModal = () => {
   return (
     <div className="relative flex flex-col items-center rounded-md bg-white p-10">
       <button onClick={closeModal} className="absolute top-5 right-5">
-        <AiOutlineClose />
+        <IconWrapper Icon={AiOutlineClose} />
       </button>
       <h2 className="mb-4 text-2xl font-bold">Choose background</h2>
       <div className="grid gap-5 sm:grid-cols-2">

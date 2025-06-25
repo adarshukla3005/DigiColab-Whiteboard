@@ -2,6 +2,7 @@ import { useEffect } from "react";
 
 import { motion, useMotionValue } from "framer-motion";
 import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
+import { IconWrapper } from "@/common/components/IconWrapper";
 
 import { DEFAULT_MOVE } from "@/common/constants/defaultMove";
 import { getPos } from "@/common/lib/getPos";
@@ -63,13 +64,13 @@ const MoveImage = () => {
           className="rounded-full bg-gray-200 p-2"
           onClick={handlePlaceImage}
         >
-          <AiOutlineCheck />
+          <IconWrapper Icon={AiOutlineCheck} />
         </button>
         <button
           className="rounded-full bg-gray-200 p-2"
           onClick={() => setMoveImage({ base64: "" })}
         >
-          <AiOutlineClose />
+          <IconWrapper Icon={AiOutlineClose} />
         </button>
       </div>
       <img

@@ -5,6 +5,7 @@ import { BiRectangle } from "react-icons/bi";
 import { BsCircle } from "react-icons/bs";
 import { CgShapeZigzag } from "react-icons/cg";
 import { useClickAway } from "react-use";
+import { IconWrapper } from "@/common/components/IconWrapper";
 
 import { useOptions } from "@/common/recoil/options";
 
@@ -35,9 +36,9 @@ const ShapeSelector = () => {
         disabled={options.mode === "select"}
         onClick={() => setOpened((prev) => !prev)}
       >
-        {options.shape === "circle" && <BsCircle />}
-        {options.shape === "rect" && <BiRectangle />}
-        {options.shape === "line" && <CgShapeZigzag />}
+        {options.shape === "circle" && <IconWrapper Icon={BsCircle} />}
+        {options.shape === "rect" && <IconWrapper Icon={BiRectangle} />}
+        {options.shape === "line" && <IconWrapper Icon={CgShapeZigzag} />}
       </button>
 
       <AnimatePresence>
@@ -53,21 +54,21 @@ const ShapeSelector = () => {
               className="btn-icon text-2xl"
               onClick={() => handleShapeChange("line")}
             >
-              <CgShapeZigzag />
+              <IconWrapper Icon={CgShapeZigzag} />
             </button>
 
             <button
               className="btn-icon text-2xl"
               onClick={() => handleShapeChange("rect")}
             >
-              <BiRectangle />
+              <IconWrapper Icon={BiRectangle} />
             </button>
 
             <button
               className="btn-icon text-2xl"
               onClick={() => handleShapeChange("circle")}
             >
-              <BsCircle />
+              <IconWrapper Icon={BsCircle} />
             </button>
           </motion.div>
         )}

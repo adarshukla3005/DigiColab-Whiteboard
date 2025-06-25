@@ -1,4 +1,5 @@
 import { AiOutlineClose } from "react-icons/ai";
+import { IconWrapper } from "@/common/components/IconWrapper";
 
 import { useModal } from "@/common/recoil/modal";
 
@@ -8,7 +9,7 @@ const NotFoundModal = ({ id }: { id: string }) => {
   return (
     <div className="relative flex flex-col items-center rounded-md bg-white p-10 ">
       <button onClick={closeModal} className="absolute top-5 right-5">
-        <AiOutlineClose />
+        <IconWrapper Icon={AiOutlineClose} />
       </button>
       <h2 className="text-lg font-bold">
         Room with id &quot;{id}&quot; does not exist or is full!

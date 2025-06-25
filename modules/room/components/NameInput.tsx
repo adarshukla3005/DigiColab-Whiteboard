@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useState } from "react";
 
 import { useRouter } from "next/router";
 import { FiEdit3 } from "react-icons/fi";
+import { IconWrapper } from "@/common/components/IconWrapper";
 
 import { socket } from "@/common/lib/socket";
 import { useModal } from "@/common/recoil/modal";
@@ -64,7 +65,7 @@ const NameInput = () => {
         >
           <div className="mb-6 flex items-center justify-center">
             <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary-100">
-              <FiEdit3 className="h-8 w-8 text-primary-600" />
+              <IconWrapper Icon={FiEdit3} className="h-8 w-8 text-primary-600" />
             </div>
           </div>
           

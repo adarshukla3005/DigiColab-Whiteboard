@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { RgbaColorPicker } from "react-colorful";
 import { IoColorPaletteOutline } from "react-icons/io5";
 import { useClickAway } from "react-use";
+import { IconWrapper } from "@/common/components/IconWrapper";
 
 import { useOptions } from "@/common/recoil/options/options.hooks";
 
@@ -26,7 +27,7 @@ const ColorPicker = () => {
         disabled={options.mode === "select"}
         title="Color Picker"
       >
-        <IoColorPaletteOutline />
+        <IconWrapper Icon={IoColorPaletteOutline} />
         <div 
           className="absolute bottom-0 right-0 h-3 w-3 rounded-full border border-white"
           style={{ 

@@ -1,6 +1,7 @@
 import { AiOutlineDelete } from "react-icons/ai";
 import { BsArrowsMove } from "react-icons/bs";
 import { FiCopy } from "react-icons/fi";
+import { IconWrapper } from "@/common/components/IconWrapper";
 
 import { useOptionsValue } from "@/common/recoil/options";
 
@@ -23,9 +24,9 @@ const SelectionBtns = () => {
   }
 
   const buttons = [
-    { icon: <BsArrowsMove />, title: "Move", index: 0 },
-    { icon: <FiCopy />, title: "Copy", index: 1 },
-    { icon: <AiOutlineDelete />, title: "Delete", index: 2 },
+    { icon: <IconWrapper Icon={BsArrowsMove} />, title: "Move", index: 0 },
+    { icon: <IconWrapper Icon={FiCopy} />, title: "Copy", index: 1 },
+    { icon: <IconWrapper Icon={AiOutlineDelete} />, title: "Delete", index: 2 },
   ];
 
   return (

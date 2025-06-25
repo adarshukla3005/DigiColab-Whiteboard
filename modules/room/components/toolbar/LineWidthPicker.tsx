@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { TbLine } from "react-icons/tb";
 import { useClickAway } from "react-use";
+import { IconWrapper } from "@/common/components/IconWrapper";
 
 import { useOptions } from "@/common/recoil/options";
 
@@ -25,7 +26,7 @@ const LineWidthPicker = () => {
         disabled={options.mode === "select"}
         title="Line Width"
       >
-        <TbLine className="rotate-45" strokeWidth={options.lineWidth > 10 ? 3 : options.lineWidth > 5 ? 2 : 1} />
+        <IconWrapper Icon={TbLine} className="rotate-45" strokeWidth={options.lineWidth > 10 ? 3 : options.lineWidth > 5 ? 2 : 1} />
         <div className="absolute bottom-0 right-0 flex h-4 w-4 items-center justify-center rounded-full bg-primary-100 text-[8px] font-semibold text-primary-800">
           {options.lineWidth}
         </div>

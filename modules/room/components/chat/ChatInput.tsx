@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react";
 
 import { IoSendSharp } from "react-icons/io5";
+import { IconWrapper } from "@/common/components/IconWrapper";
 
 import { socket } from "@/common/lib/socket";
 
@@ -30,7 +31,7 @@ const ChatInput = () => {
         type="submit"
         disabled={!msg.trim()}
       >
-        <IoSendSharp />
+        <IconWrapper Icon={IoSendSharp} />
       </button>
     </form>
   );

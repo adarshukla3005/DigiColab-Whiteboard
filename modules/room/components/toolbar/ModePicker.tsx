@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { AiOutlineSelect } from "react-icons/ai";
 import { BsPencilFill } from "react-icons/bs";
 import { FaEraser } from "react-icons/fa";
+import { IconWrapper } from "@/common/components/IconWrapper";
 
 import { useOptions, useSetSelection } from "@/common/recoil/options";
 
@@ -18,17 +19,17 @@ const ModePicker = () => {
   const modes = [
     {
       id: "draw",
-      icon: <BsPencilFill />,
+      icon: <IconWrapper Icon={BsPencilFill} />,
       title: "Draw"
     },
     {
       id: "eraser",
-      icon: <FaEraser />,
+      icon: <IconWrapper Icon={FaEraser} />,
       title: "Eraser"
     },
     {
       id: "select",
-      icon: <AiOutlineSelect className="text-xl" />,
+      icon: <IconWrapper Icon={AiOutlineSelect} className="text-xl" />,
       title: "Select"
     }
   ];

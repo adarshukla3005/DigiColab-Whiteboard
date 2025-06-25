@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { motion } from "framer-motion";
 import { BsArrowsMove } from "react-icons/bs";
+import { IconWrapper } from "@/common/components/IconWrapper";
 
 import { CANVAS_SIZE } from "@/common/constants/canvasSize";
 import { useViewportSize } from "@/common/hooks/useViewportSize";
@@ -111,7 +112,7 @@ const Canvas = () => {
         } p-3 text-lg text-white transition-all hover:shadow-md`}
         onClick={() => setDragging((prev) => !prev)}
       >
-        <BsArrowsMove />
+        <IconWrapper Icon={BsArrowsMove} />
       </button>
     </div>
   );

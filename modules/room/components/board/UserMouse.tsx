@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { motion } from "framer-motion";
 import { BsCursorFill } from "react-icons/bs";
+import { IconWrapper } from "@/common/components/IconWrapper";
 
 import { socket } from "@/common/lib/socket";
 import { useRoom } from "@/common/recoil/room";
@@ -60,7 +61,7 @@ const UserMouse = ({ userId }: { userId: string }) => {
       animate={{ x: pos.x + x, y: pos.y + y }}
       transition={{ duration: 0.2, ease: "linear" }}
     >
-      <BsCursorFill className="-rotate-90" />
+      <IconWrapper Icon={BsCursorFill} className="-rotate-90" />
       {msg && (
         <p className="absolute top-full left-5 max-h-20 max-w-[15rem] overflow-hidden text-ellipsis rounded-md bg-zinc-900 p-1 px-3 text-white">
           {msg}

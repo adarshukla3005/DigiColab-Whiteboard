@@ -6,6 +6,7 @@ import { FiChevronRight } from "react-icons/fi";
 import { HiOutlineDownload } from "react-icons/hi";
 import { ImExit } from "react-icons/im";
 import { IoIosShareAlt } from "react-icons/io";
+import { IconWrapper } from "@/common/components/IconWrapper";
 
 import { CANVAS_SIZE } from "@/common/constants/canvasSize";
 import { DEFAULT_EASE } from "@/common/constants/easings";
@@ -66,7 +67,7 @@ const ToolBar = () => {
         transition={{ duration: 0.2, ease: DEFAULT_EASE }}
         onClick={() => setOpened(!opened)}
       >
-        <FiChevronRight />
+        <IconWrapper Icon={FiChevronRight} />
       </motion.button>
       <motion.div
         className="toolbar-container absolute left-10 top-[50%] z-50 grid grid-cols-2 items-center gap-5 p-6 text-secondary-800"
@@ -95,13 +96,13 @@ const ToolBar = () => {
 
         <BackgroundPicker />
         <button className="btn-icon text-2xl" onClick={handleShare}>
-          <IoIosShareAlt />
+          <IconWrapper Icon={IoIosShareAlt} />
         </button>
         <button className="btn-icon text-2xl" onClick={handleDownload}>
-          <HiOutlineDownload />
+          <IconWrapper Icon={HiOutlineDownload} />
         </button>
         <button className="btn-icon text-xl" onClick={handleExit}>
-          <ImExit />
+          <IconWrapper Icon={ImExit} />
         </button>
       </motion.div>
     </>

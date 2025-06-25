@@ -1,4 +1,5 @@
 import { FaRedo, FaUndo } from "react-icons/fa";
+import { IconWrapper } from "@/common/components/IconWrapper";
 
 import { useMyMoves } from "@/common/recoil/room";
 import { useSavedMoves } from "@/common/recoil/savedMoves";
@@ -19,7 +20,7 @@ const HistoryBtns = () => {
         disabled={!myMoves.length}
         title="Undo"
       >
-        <FaUndo />
+        <IconWrapper Icon={FaUndo} />
       </button>
       <button
         className="btn-icon text-xl"
@@ -27,7 +28,7 @@ const HistoryBtns = () => {
         disabled={!savedMoves.length}
         title="Redo"
       >
-        <FaRedo />
+        <IconWrapper Icon={FaRedo} />
       </button>
     </div>
   );

@@ -1,4 +1,5 @@
 import { CgScreen } from "react-icons/cg";
+import { IconWrapper } from "@/common/components/IconWrapper";
 
 import { useModal } from "@/common/recoil/modal";
 
@@ -9,7 +10,7 @@ const BackgroundPicker = () => {
 
   return (
     <button className="btn-icon" onClick={() => openModal(<BackgroundModal />)}>
-      <CgScreen />
+      <IconWrapper Icon={CgScreen} />
     </button>
   );
 };
