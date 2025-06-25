@@ -3,7 +3,7 @@
   <img src="https://github.com/user-attachments/assets/d64644bb-6f23-483e-91e7-6d174e393600" alt="DigiColab Logo" width="200" />
   <p><strong>Collaborate, Create, Communicate</strong></p>
   <p>
-    👉 <a href="https://whiteboard-rzl6.onrender.com" target="_blank" rel="noopener noreferrer"><strong>Visit DigiColab</strong></a>
+    👉 <a href="https://whiteboard-rzl6.onrender.com" target="_blank" rel="noopener noreferrer"><strong>Visit DigiColab</strong></a> (IITR wifi blocks the site use mobile data or wifi)
   </p>
 </div>
 
