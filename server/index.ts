@@ -202,8 +202,8 @@ const startServer = async () => {
         io.to(socket.id).emit("created", roomId);
       } catch (error) {
         console.error("Error creating room in database:", error);
-        // Notify client of failure
-        io.to(socket.id).emit("error", "Failed to create room");
+        // Notify client of failure - use a valid event type from the interface
+        io.to(socket.id).emit("joined", "", true); // Send failed=true to indicate error
       }
     });
 
