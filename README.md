@@ -1,7 +1,6 @@
 # DigiColab: Real-Time Collaborative Whiteboard
-
 <div align="center">
-  <img src="public/digicolab-logo.png" alt="DigiColab Logo" width="200" />
+  <img src="https://github.com/user-attachments/assets/d64644bb-6f23-483e-91e7-6d174e393600" alt="DigiColab Logo" width="200" />
   <p><strong>Collaborate, Create, Communicate</strong></p>
 </div>
 
