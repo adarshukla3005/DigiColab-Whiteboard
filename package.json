@@ -7,10 +7,10 @@
   "scripts": {
   
     
-  "dev": "nodemon server/index.ts",
+  "dev": "nodemon --exec \"ts-node --project tsconfig.server.json\" server/index.ts",
   
     
-  "dev:client": "ts-node server/index.ts",
+  "dev:client": "ts-node --project tsconfig.server.json server/index.ts",
   
     
   "build:server": "tsc --project tsconfig.server.json",
@@ -19,7 +19,7 @@
   "build:next": "next build",
   
     
-  "build": "next build",
+  "build": "npm-run-all build:*",
   
     
   "start": "cross-env NODE_ENV=production node build/index.js",
@@ -59,7 +59,7 @@
   "mongoose": "^8.3.2",
   
     
-  "next": "13.4.19",
+  "next": "latest",
   
     
   "react": "^18.2.0",
@@ -71,7 +71,7 @@
   "react-dom": "^18.2.0",
   
     
-  "react-icons": "^4.10.0",
+  "react-icons": "^5.5.0",
   
     
   "react-image-file-resizer": "^0.4.8",
@@ -80,7 +80,7 @@
   "react-toastify": "^9.0.3",
   
     
-  "react-use": "^17.6.0",
+  "react-use": "^17.3.2",
   
     
   "recoil": "^0.7.3-alpha.2",
@@ -105,7 +105,7 @@
   "@types/node": "17.0.4",
   
     
-  "@types/react": "18.2.0",
+  "@types/react": "17.0.38",
   
     
   "@types/react-dom": "^18.0.4",
@@ -114,10 +114,7 @@
   "@types/uuid": "^8.3.4",
   
     
-  "@typescript-eslint/eslint-plugin": "^5.59.0",
-  
-    
-  "@typescript-eslint/parser": "^5.59.0",
+  "@typescript-eslint/eslint-plugin": "^8.35.0",
   
     
   "autoprefixer": "^10.4.0",
@@ -183,13 +180,7 @@
   "ts-node": "^10.9.2",
   
     
-  "typescript": "5.0.4"
+  "typescript": "4.5.4"
   
-  },
-  "overrides": {
-    "react-use": {
-      "react": "^18.2.0",
-      "react-dom": "^18.2.0"
-    }
   }
 }

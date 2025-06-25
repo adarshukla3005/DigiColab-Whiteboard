@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 // Define connection options
 const options: mongoose.ConnectOptions = {
-  bufferCommands: true,
+  bufferCommands: false,
 };
 
 // Cache interface
@@ -28,7 +28,7 @@ async function connectDB(): Promise<typeof mongoose> {
   console.log('Using URI:', MONGODB_URI.replace(/:([^:@]+)@/, ':****@'));
 
   // If already connected, return the existing connection
-  if (globalCache.isConnected && mongoose.connection.readyState === 1) {
+  if (globalCache.isConnected) {
     console.log('Using existing MongoDB connection');
     return mongoose;
   }
@@ -48,22 +48,6 @@ async function connectDB(): Promise<typeof mongoose> {
 
     await promise;
     globalCache.isConnected = true;
-    
-    // Set up connection event listeners
-    mongoose.connection.on('connected', () => {
-      console.log('MongoDB connected successfully');
-    });
-    
-    mongoose.connection.on('error', (err) => {
-      console.error('MongoDB connection error:', err);
-      globalCache.isConnected = false;
-    });
-    
-    mongoose.connection.on('disconnected', () => {
-      console.log('MongoDB disconnected');
-      globalCache.isConnected = false;
-    });
-    
     console.log('Connected to MongoDB');
     return mongoose;
   } catch (error) {

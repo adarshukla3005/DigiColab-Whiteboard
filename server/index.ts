@@ -1,68 +1,42 @@
 import { createServer } from "http";
 
-import {} from "./types/global";
+import {} from "@/common/types/global";
 
 import express from "express";
-import next from "next";
+import next, { NextApiHandler } from "next";
 import { Server } from "socket.io";
 import { v4 } from "uuid";
 import connectDB from "./db/connect";
 import Room from "./models/Room";
 import User from "./models/User";
 import Session from "./models/Session";
-import dotenv from "dotenv";
-import mongoose from "mongoose";
-
-// Load environment variables
-dotenv.config();
 
 // Enable mongoose debugging in development mode
 if (process.env.NODE_ENV !== "production") {
+  const mongoose = require('mongoose');
   mongoose.set('debug', true);
   console.log('MongoDB debug mode enabled');
 }
 
 const port = parseInt(process.env.PORT || "3000", 10);
 const dev = process.env.NODE_ENV !== "production";
+const nextApp = next({ dev });
+const nextHandler: NextApiHandler = nextApp.getRequestHandler();
 
-// Only use Next.js in development mode or when running as a monorepo
-const isMonorepo = process.env.IS_MONOREPO === "true";
-const nextApp = isMonorepo || dev ? next({ dev }) : null;
-const nextHandler = nextApp ? nextApp.getRequestHandler() : null;
-
-// Function to start the server
-const startServer = async () => {
-  // Connect to MongoDB first and ensure connection is established
+nextApp.prepare().then(async () => {
+  // Connect to MongoDB
   try {
     await connectDB();
-    
-    // Double-check connection state
-    if (mongoose.connection.readyState !== 1) {
-      console.log("Waiting for MongoDB connection to be ready...");
-      await new Promise((resolve) => {
-        mongoose.connection.once('connected', resolve);
-      });
-    }
-    
-    console.log("MongoDB connection confirmed");
+    console.log("Connected to MongoDB");
   } catch (error) {
     console.error("MongoDB connection error:", error);
-    process.exit(1); // Exit if we can't connect to MongoDB
   }
 
   const app = express();
   const server = createServer(app);
 
-  // Configure CORS for Socket.IO
-  const io = new Server<ClientToServerEvents, ServerToClientEvents>(server, {
-    cors: {
-      origin: process.env.FRONTEND_URL || "*",
-      methods: ["GET", "POST"],
-      credentials: true
-    }
-  });
+  const io = new Server<ClientToServerEvents, ServerToClientEvents>(server);
 
-  // Health check endpoint
   app.get("/health", async (_, res) => {
     res.send("Healthy");
   });
@@ -164,20 +138,21 @@ const startServer = async () => {
     };
 
     socket.on("create_room", async (username) => {
+      let roomId: string;
+      do {
+        roomId = Math.random().toString(36).substring(2, 6);
+      } while (rooms.has(roomId));
+
+      socket.join(roomId);
+
+      rooms.set(roomId, {
+        usersMoves: new Map([[socket.id, []]]),
+        drawed: [],
+        users: new Map([[socket.id, username]]),
+      });
+
+      // Create room in MongoDB
       try {
-        let roomId: string;
-        do {
-          roomId = Math.random().toString(36).substring(2, 6);
-        } while (rooms.has(roomId));
-
-        socket.join(roomId);
-
-        rooms.set(roomId, {
-          usersMoves: new Map([[socket.id, []]]),
-          drawed: [],
-          users: new Map([[socket.id, username]]),
-        });
-
         console.log(`Creating room ${roomId} with user ${socket.id} (${username})`);
         
         // Create room in MongoDB
@@ -198,13 +173,11 @@ const startServer = async () => {
           participants: [socket.id],
         });
         console.log(`Session created for room ${roomId}`);
-
-        io.to(socket.id).emit("created", roomId);
       } catch (error) {
         console.error("Error creating room in database:", error);
-        // Notify client of failure - use a valid event type from the interface
-        io.to(socket.id).emit("joined", "", true); // Send failed=true to indicate error
       }
+
+      io.to(socket.id).emit("created", roomId);
     });
 
     socket.on("check_room", async (roomId) => {
@@ -388,21 +361,10 @@ const startServer = async () => {
     });
   });
 
-  // Only use Next.js in development mode or when running as a monorepo
-  if (nextApp && nextHandler) {
-    await nextApp.prepare();
-    app.all("*", (req: any, res: any) => {
-      return nextHandler(req, res);
-    });
-  }
+  app.all("*", (req: any, res: any) => nextHandler(req, res));
 
   server.listen(port, () => {
-    console.log(`> Server listening at http://localhost:${port}`);
+    // eslint-disable-next-line no-console
+    console.log(`> Ready on http://localhost:${port}`);
   });
-};
-
-// Start the server
-startServer().catch(err => {
-  console.error("Failed to start server:", err);
-  process.exit(1);
 });
