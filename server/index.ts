@@ -1,6 +1,6 @@
 import { createServer } from "http";
 
-import {} from "@/common/types/global";
+import {} from "./types/global";
 
 import express from "express";
 import next from "next";
@@ -11,13 +11,13 @@ import Room from "./models/Room";
 import User from "./models/User";
 import Session from "./models/Session";
 import dotenv from "dotenv";
+import mongoose from "mongoose";
 
 // Load environment variables
 dotenv.config();
 
 // Enable mongoose debugging in development mode
 if (process.env.NODE_ENV !== "production") {
-  const mongoose = require('mongoose');
   mongoose.set('debug', true);
   console.log('MongoDB debug mode enabled');
 }
@@ -32,12 +32,22 @@ const nextHandler = nextApp ? nextApp.getRequestHandler() : null;
 
 // Function to start the server
 const startServer = async () => {
-  // Connect to MongoDB
+  // Connect to MongoDB first and ensure connection is established
   try {
     await connectDB();
-    console.log("Connected to MongoDB");
+    
+    // Double-check connection state
+    if (mongoose.connection.readyState !== 1) {
+      console.log("Waiting for MongoDB connection to be ready...");
+      await new Promise((resolve) => {
+        mongoose.connection.once('connected', resolve);
+      });
+    }
+    
+    console.log("MongoDB connection confirmed");
   } catch (error) {
     console.error("MongoDB connection error:", error);
+    process.exit(1); // Exit if we can't connect to MongoDB
   }
 
   const app = express();
@@ -154,21 +164,20 @@ const startServer = async () => {
     };
 
     socket.on("create_room", async (username) => {
-      let roomId: string;
-      do {
-        roomId = Math.random().toString(36).substring(2, 6);
-      } while (rooms.has(roomId));
-
-      socket.join(roomId);
-
-      rooms.set(roomId, {
-        usersMoves: new Map([[socket.id, []]]),
-        drawed: [],
-        users: new Map([[socket.id, username]]),
-      });
-
-      // Create room in MongoDB
       try {
+        let roomId: string;
+        do {
+          roomId = Math.random().toString(36).substring(2, 6);
+        } while (rooms.has(roomId));
+
+        socket.join(roomId);
+
+        rooms.set(roomId, {
+          usersMoves: new Map([[socket.id, []]]),
+          drawed: [],
+          users: new Map([[socket.id, username]]),
+        });
+
         console.log(`Creating room ${roomId} with user ${socket.id} (${username})`);
         
         // Create room in MongoDB
@@ -189,11 +198,13 @@ const startServer = async () => {
           participants: [socket.id],
         });
         console.log(`Session created for room ${roomId}`);
+
+        io.to(socket.id).emit("created", roomId);
       } catch (error) {
         console.error("Error creating room in database:", error);
+        // Notify client of failure
+        io.to(socket.id).emit("error", "Failed to create room");
       }
-
-      io.to(socket.id).emit("created", roomId);
     });
 
     socket.on("check_room", async (roomId) => {
