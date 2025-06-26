@@ -134,26 +134,13 @@ DigiColab can be deployed to various platforms such as Vercel, Railway, or a tra
 
 ### Deployment Options
 
-#### Vercel Deployment
-
-1. Install Vercel CLI:
-   ```bash
-   npm install -g vercel
-   ```
-
-2. Login to Vercel:
-   ```bash
-   vercel login
-   ```
-
-3. Deploy your application:
-   ```bash
-   vercel
-   ```
-
-4. Configure environment variables in the Vercel dashboard:
+#### Rendor Deployment
+1. Create new project and import Repo from GitHub
+2. Configure environment variables in the Vercel dashboard:
    - MONGODB_URI
    - NODE_ENV=production
+3. `npm build next`
+4. Ready for deployment
 
 #### Railway Deployment
 
