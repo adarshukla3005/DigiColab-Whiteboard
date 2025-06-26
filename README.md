@@ -5,7 +5,7 @@
   <p>
     👉 <a href="https://whiteboard-rzl6.onrender.com" target="_blank" rel="noopener noreferrer"><strong>Visit DigiColab</strong></a>
   </p>
-  <p>(IITR wifi blocks the site use mobile data or wifi)</p>
+  <p>(IITR wifi blocks the site use mobile data or wifi or VPN)</p>
 </div>
 
 ## 📝 Project Description
