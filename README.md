@@ -5,7 +5,6 @@
   <p>
     👉 <a href="https://whiteboard-mkss.onrender.com" target="_blank" rel="noopener noreferrer"><strong>Visit DigiColab</strong></a>
   </p>
-  <p>(IITR wifi blocks the site use mobile data or wifi or VPN)</p>
 </div>
 
 ## 📝 Project Description
